@@ -16,6 +16,9 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewphoto))
+        
+        
     }
     // Количество строк в таблице
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -28,6 +31,18 @@ class ViewController: UITableViewController {
         let picture = pictures[indexPath.row]
         cell.textLabel?.text = picture.caption
         return cell
+    }
+    
+    // Функция получения картинки с фотоаппарата
+    @objc func addNewphoto() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        } else {
+            picker.sourceType = .photoLibrary
+        }
     }
     
 }

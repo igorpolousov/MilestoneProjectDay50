@@ -17,6 +17,8 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate,UIN
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewphoto))
         
+        loadData()
+        
         
     }
     // Количество строк в таблице
@@ -26,8 +28,8 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate,UIN
 
     // Описание ячейки в таблице
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         let picture = pictures[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         cell.textLabel?.text = picture.caption
         return cell
     }
@@ -58,14 +60,22 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate,UIN
        if let jpegData = image.jpegData(compressionQuality: 0.7) {
             try? jpegData.write(to: imagePath)
         }
-        
-        let picture = Picture(image: imageName, caption: "Unknown")
-        
-        pictures.append(picture)
-        print(pictures)
-        tableView.reloadData()
+        var picture = Picture(image: imageName, caption: "")
+    
         dismiss(animated: true)
         
+        let ac = UIAlertController(title: "Add caption", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Add", style: .default) { [weak self, weak ac] action in
+            guard let newCaption = ac?.textFields?[0].text else { return }
+            picture.caption = newCaption
+            self?.pictures.append(picture)
+            self?.save()
+            self?.tableView.reloadData()
+        })
+        present(ac, animated: true)
+    
     }
     
     func getDocumentDirectory() -> URL {
@@ -78,9 +88,31 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate,UIN
             let path = getDocumentDirectory().appendingPathComponent(pictures[indexPath.row].image)
            
             vc.selectedImage = path.path
-          
+            vc.photoTitle = pictures[indexPath.row].caption
             navigationController?.pushViewController(vc, animated: true)
             
+        }
+    }
+    
+    func save() {
+        let jsonEncoder = JSONEncoder()
+        if let savedData = try? jsonEncoder.encode(pictures){
+            let defaults = UserDefaults.standard
+            defaults.setValue(savedData, forKey: "pictures")
+        } else {
+            print("Failed to save pictures")
+        }
+    }
+    
+    func loadData() {
+        let defaults = UserDefaults.standard
+        if let savedPictures = defaults.object(forKey: "pictures") as? Data {
+            let jsonDecoder = JSONDecoder()
+            do {
+                try pictures = jsonDecoder.decode([Picture].self, from: savedPictures)
+            } catch  {
+                print("Failed to load data")
+            }
         }
     }
     

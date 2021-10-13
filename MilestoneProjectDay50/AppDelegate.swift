@@ -1,7 +1,7 @@
 //
 //  AppDelegate.swift
 //  MilestoneProjectDay50
-//
+//  Day 50
 //  Created by Igor Polousov on 11.10.2021.
 //
 

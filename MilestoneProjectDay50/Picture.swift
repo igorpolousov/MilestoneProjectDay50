@@ -8,6 +8,6 @@
 import Foundation
 
 struct Picture: Codable {
-    var fileName: String
+    var image: String
     var caption: String
 }

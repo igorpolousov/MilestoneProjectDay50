@@ -40,17 +40,31 @@
         <!--Detail View Controller-->
         <scene sceneID="YIp-2d-xyh">
             <objects>
-                <viewController id="qFi-vd-BCF" customClass="DetailViewController" customModule="MilestoneProjectDay50" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Detail" id="qFi-vd-BCF" customClass="DetailViewController" customModule="MilestoneProjectDay50" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="26t-y5-xHX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ope-PH-zbG">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="906"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="eHS-0H-Rtu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ope-PH-zbG" firstAttribute="leading" secondItem="eHS-0H-Rtu" secondAttribute="leading" id="AcP-Ln-YrC"/>
+                            <constraint firstItem="Ope-PH-zbG" firstAttribute="top" secondItem="eHS-0H-Rtu" secondAttribute="top" constant="-44" id="QBq-DU-MBj"/>
+                            <constraint firstItem="Ope-PH-zbG" firstAttribute="centerX" secondItem="eHS-0H-Rtu" secondAttribute="centerX" id="Uwo-Lk-qvR"/>
+                            <constraint firstItem="Ope-PH-zbG" firstAttribute="centerY" secondItem="eHS-0H-Rtu" secondAttribute="centerY" id="qQp-ge-syM"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="Ope-PH-zbG" id="3xP-aT-wOv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KcD-3C-sWo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1342" y="108"/>
+            <point key="canvasLocation" x="1340.5797101449277" y="107.8125"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ynK-VE-hnB">
